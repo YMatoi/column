@@ -2,15 +2,13 @@
 
 ## Usage
 
-sample.txt
 ```
+$ cat hoge.txt
 A B C D
 E F G H
 I J K L
 M N O P
-```
 
-```
 $ cat hoge.txt | column 3 1                                              (git)-[master]
 D B
 H F
