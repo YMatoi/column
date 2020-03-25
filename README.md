@@ -9,7 +9,7 @@ E F G H
 I J K L
 M N O P
 
-$ cat hoge.txt | column 3 1                                              (git)-[master]
+$ cat hoge.txt | column 3 1
 D B
 H F
 L J
