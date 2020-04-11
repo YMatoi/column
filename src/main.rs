@@ -2,7 +2,11 @@ use std::io::{self, BufRead, BufReader, BufWriter};
 use std::io::Write;
 use std::env;
 
-fn columns(line: &String, column_numbers: &Vec<usize>) -> String {
+#[macro_use]
+extern crate clap;
+use clap::Arg;
+
+fn columns(line: &String, column_numbers: &Vec<usize>)-> String {
     column_numbers.iter()
         .filter_map( |n| line.split_whitespace().nth(*n))
         .collect::<Vec<&str>>()
@@ -25,7 +29,15 @@ fn main_loop(func: &dyn Fn(&String) -> String) {
 }
 
 fn main() {
-    let args: Vec<usize> = env::args()
+    let matches = app_from_crate!()
+        .arg(Arg::with_name("columns")
+             .multiple(true)
+             .takes_value(true)
+             .required(true)
+        )
+        .get_matches();
+
+    let args: Vec<usize> = matches.values_of("columns").unwrap()
         .map(|arg| arg.parse::<usize>())
         .filter_map(Result::ok)
         .collect();
