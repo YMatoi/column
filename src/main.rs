@@ -9,22 +9,28 @@ fn columns(line: &String, column_numbers: &Vec<usize>) -> String {
         .join("\t")
 }
 
+fn main_loop(func: &dyn Fn(&String) -> String) {
+    let input = io::stdin();
+    let mut reader = BufReader::new(input.lock());
+
+    let output = io::stdout();
+    let mut writer = BufWriter::new(output.lock());
+
+    let mut buf = String::new();
+
+    while reader.read_line(&mut buf).unwrap() > 0 {
+        writeln!(writer, "{}", func(&buf)).unwrap();
+        buf.clear();
+    }
+}
+
 fn main() {
     let args: Vec<usize> = env::args()
         .map(|arg| arg.parse::<usize>())
         .filter_map(Result::ok)
         .collect();
 
-    let input = io::stdin();
-    let mut reader = BufReader::new(input.lock());
+    let func = |s: &String| columns(s, &args);
 
-    let output = io::stdout();
-    let mut writer = BufWriter::new(output.lock());
-    
-    let mut buf = String::new();
-
-    while reader.read_line(&mut buf).unwrap() > 0 {
-        writeln!(writer, "{}", columns(&buf, &args)).unwrap();
-        buf.clear();
-    }
+    main_loop(&func);
 }
