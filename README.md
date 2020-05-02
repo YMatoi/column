@@ -3,6 +3,21 @@
 ## Usage
 
 ```
+USAGE:
+    column [OPTIONS] <columns>...
+
+FLAGS:
+    -h, --help       Prints help information
+    -V, --version    Prints version information
+
+OPTIONS:
+    -s <separator>        
+
+ARGS:
+    <columns>...   
+```
+
+```
 $ cat hoge.txt
 A B C D
 E F G H
